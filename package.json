@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^5.18.0",
     "datatables.net-dt": "^2.0.7",
     "react": "^18.2.0",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "6.4"
   },

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BotonIngresar from "../components/BotonIngresar";
 import BotonLimpiar from "../components/BotonLimpiar";
 import Password from "../components/Password";
@@ -16,6 +16,13 @@ const Login = () => {
 
     const navigate = useNavigate()
 
+    useEffect(() => { 
+        if(!user.login){
+            navigate('/')
+        }else{
+            navigate('/menu')
+        }
+     },[user]);
 
     function handlerSubmit(e){
       e.preventDefault();
@@ -33,12 +40,12 @@ const Login = () => {
         )
         .then(result =>{  
           console.log('Respuesta: ', result)
-          if(result.body != 'false'){
+          if(result.body == 'false'){
+            navigate('/')
+          }else{
             const unUsuario = {...user, login: true, token: result.body}
             setUser(unUsuario);
-            navigate('../menu')
-          }else{
-            navigate('/')
+//            navigate('/menu')
           }
         }
          )
@@ -55,11 +62,11 @@ const Login = () => {
                 <form>
                     <div className="container row">
                         <Usuario usuario={usuario} setUsuario = {setUsuario}/>
-                        <Password password={password} set setPassword={setPassword}/>
+                        <Password password={password} setPassword={setPassword}/>
                     </div>
                     <div className="text-center my-5">
                       <BotonIngresar handlerSubmit = {handlerSubmit}/>
-                      <BotonLimpiar/>
+                      <BotonLimpiar setUsuario = {setUsuario} setPassword={setPassword}/>
                     </div>
                   </form>
                 </div>  

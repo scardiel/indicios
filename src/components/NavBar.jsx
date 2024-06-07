@@ -8,7 +8,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   function logout(){
-       const unUsuario = {...user, login: false}
+       const unUsuario = {...user, login: false,token: ''}
        setUser(unUsuario);
        console.log('Usuario: ', unUsuario);
        navigate('/')
