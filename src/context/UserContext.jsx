@@ -4,11 +4,20 @@ export const UserContext = createContext();
 
 const UserProvider = ({children}) => { 
     
-    const [user, setUser] = useState({
-        login: false,
-        nombre: '',
-        token: ''
-    });
+        const [user, setUser] = useState({
+            login: false,
+            nombre: '',
+            token: ''
+        });
+
+        if(!sessionStorage.getItem('usuario')){
+            sessionStorage.setItem('usuario',JSON.stringify({
+                login: false,
+                nombre: '',
+                token: ''
+            }))
+        }
+
 
     return(
         <UserContext.Provider value={{user, setUser}}>

@@ -16,6 +16,8 @@ const Login = () => {
 
     const navigate = useNavigate()
 
+    const usuarioSes = JSON.parse(sessionStorage.getItem('usuario'))
+
     useEffect(() => { 
         if(!user.login){
             navigate('/')
@@ -39,13 +41,12 @@ const Login = () => {
           {return response.json()}
         )
         .then(result =>{  
-          console.log('Respuesta: ', result)
-          if(result.body == 'false'){
+          if(result.error){
             navigate('/')
           }else{
             const unUsuario = {...user, login: true, token: result.body}
             setUser(unUsuario);
-//            navigate('/menu')
+            sessionStorage.setItem('usuario',JSON.stringify({login: true, token: result.body}))
           }
         }
          )
@@ -78,3 +79,4 @@ const Login = () => {
  }
 
  export default Login
+ 

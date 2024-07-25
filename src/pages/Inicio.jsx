@@ -1,4 +1,4 @@
-import imagen from '../assets/images/Luz_optica.jpg'
+import imagen from '../assets/images/FGR.jpg'
 
 const Inicio = () => { 
     return (

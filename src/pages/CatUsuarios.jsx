@@ -19,7 +19,7 @@ const CatUsuarios = () => {
       };
     
     const handleDelete = (key) => {
-        console.log('Valordel ID: ', key);
+        // console.log('Valordel ID: ', key);
         const data = {id: key}
         fetch('http://localhost:4000/api/usuarios',{
           method: 'PUT', 
@@ -108,7 +108,7 @@ const CatUsuarios = () => {
 
   
         }else{
-          console.log('No coincide el password')
+           console.log('No coincide el password')
         }
       };
 
@@ -273,6 +273,7 @@ const CatUsuarios = () => {
         <div hidden={editar}>
           <Button onClick={handleAdd} type="primary" style={{marginBottom: 16,}}>Agregar</Button>
           <Table columns={columns} 
+          key={data.id}
           bordered='true'
           dataSource={data}
           title={() => {

@@ -10,12 +10,14 @@ const NavBar = () => {
   function logout(){
        const unUsuario = {...user, login: false,token: ''}
        setUser(unUsuario);
-       console.log('Usuario: ', unUsuario);
+       sessionStorage.clear();
+       //console.log('Usuario: ', unUsuario);
        navigate('/')
   }
 
+  const usuarioSes = JSON.parse(sessionStorage.getItem('usuario'))
 
-  if(user.login){
+  if(usuarioSes.login){
     return (
       <div className="my-3">
         <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -35,10 +37,10 @@ const NavBar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link className="nav-link active" to='/menu/capturaOrden'>Captura Orden</Link>
+                  <Link className="nav-link active" to='/menu/Indicios'>Indicios</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link active" to='/menu/inventario'>Inventario</Link>
+                  <Link className="nav-link active" to='/menu/IndiciosFilter'>Indicios filtro</Link>
                 </li>
                 <li className="nav-item dropdown">
                   <a
