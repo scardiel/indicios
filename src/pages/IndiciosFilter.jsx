@@ -29,9 +29,39 @@ const IndiciosFilter = () => {
       setPreviewImage(file.url || file.preview);
       setPreviewOpen(true);
     };
+
+
+    
     const handleChange = ({ fileList: newFileList, file }) => {
-      console.log('Key de quien llamo: ', keyActual)
-      console.log('Nombre de archivo: ', file.name)
+
+      const nuevaImg = {
+        id: 0,
+        id_usr: keyActual,
+        url: 'http://localhost:5173/images/'+file.name
+      }
+
+
+      switch(file.status){
+        case 'uploading':
+          fetch('http://localhost:4000/api/imagenes',{
+            method: 'POST', 
+            headers:{'Content-Type': 'application/json' }, 
+            body: JSON.stringify(nuevaImg)
+          })
+          showModal(keyActual)    /// Poner el key de quien se refresh el modla
+
+              break;
+        case 'removed':
+          var borrarImg = {...nuevaImg, id: file.id}
+          fetch('http://localhost:4000/api/imagenes',{
+            method: 'PUT', 
+            headers:{'Content-Type': 'application/json' }, 
+            body: JSON.stringify(borrarImg)
+          })
+          break;
+        default:
+          break;
+      }
       setFileList(newFileList)
     };
     
@@ -96,7 +126,7 @@ const IndiciosFilter = () => {
               width: 90,
             }}
           >
-            Search
+            Buscar
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
@@ -118,7 +148,7 @@ const IndiciosFilter = () => {
               setSearchedColumn(dataIndex);
             }}
           >
-            Filter
+            Filtrar
           </Button>
           <Button
             type="link"
@@ -127,7 +157,7 @@ const IndiciosFilter = () => {
               close();
             }}
           >
-            close
+            Cerrar
           </Button>
         </Space>
       </div>
@@ -171,7 +201,7 @@ const IndiciosFilter = () => {
 
   const showModal = (key) => {
     keyActual = key;
-    console.log('KEy actalizada', keyActual)
+//    console.log('KEy actalizada', keyActual)
     fetch('http://localhost:4000/api/Imagenes/'+key, {
       method: 'GET', 
       headers:{'Content-Type': 'application/json' }, 
@@ -220,6 +250,7 @@ const IndiciosFilter = () => {
           title: 'Ap.',
           dataIndex: 'ap',
           key: 'ap',
+          ...getColumnSearchProps('ap'),
         },
         {
           title: 'Aat',
@@ -332,7 +363,7 @@ const IndiciosFilter = () => {
       .then(result =>{ actualizaDatos(result.body)})  },[])
 
       const onFinish = (values) => {
-        console.log('Success:', values);
+//        console.log('Success:', values);
         const {password, password1} = values;
         if (password == password1){
           delete values.password1
@@ -363,7 +394,7 @@ const IndiciosFilter = () => {
       };
       
       const onChange = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+ //       console.log('params', pagination, filters, sorter, extra);
       };
 
       if (data.length === 0) {return}
