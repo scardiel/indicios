@@ -11,7 +11,7 @@ import Inventario from "../pages/Inventario";
 import Login from "../pages/Login";
 import Menu from "../pages/Menu";
 import Indicios from "../pages/Indicios";
-import IndiciosFilter from "../pages/IndiciosFilter";
+import IndiciosFilter from "../pages/indicios/IndiciosFilter";
 
 
 export const router = createBrowserRouter([

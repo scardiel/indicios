@@ -36,7 +36,7 @@ const Indicios = () => {
         {
             title: 'Fecha',
             dataIndex: 'fecha',
-            render: (text) => moment(text).format('DD/MM/YYYY'),
+//            render: (text) => moment(text).format('DD/MM/YYYY'),
             key: 'fecha',
             filteredValue: [buscar],
         },
