@@ -22,7 +22,7 @@ const CatUsuarios = () => {
         // console.log('Valordel ID: ', key);
         const data = {id: key}
         fetch('http://localhost:4000/api/usuarios',{
-          method: 'PUT', 
+          method: 'DELETE', 
           headers:{'Content-Type': 'application/json' }, 
           body: JSON.stringify(data)
         })
