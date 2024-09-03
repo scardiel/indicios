@@ -8,7 +8,6 @@ const Modalj = (params) => {
 
     const {keyActualP, isModalOpen, setIsModalOpen, fileList, setFileList} = params
 
-//    const [fileList, setFileList] = useState([]);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
 
@@ -59,7 +58,7 @@ const Modalj = (params) => {
               headers:{'Content-Type': 'application/json' }, 
               body: JSON.stringify(nuevaImg)
             })
-            showModal(keyActual)    /// Poner el key de quien se refresh el modal
+            showModal(keyActual)    
 
                 break;
           case 'removed':

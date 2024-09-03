@@ -6,6 +6,7 @@ import Highlighter from 'react-highlight-words';
 import Modalj from './Modalj'
 import TextArea from 'antd/es/input/TextArea';
 import ModalObs from './ModalObs';
+import ModalDoc from './ModalDoc';
 
 
 var keyActual = 0;
@@ -13,13 +14,15 @@ var keyActual = 0;
 const IndiciosFilter = () => {
 
     const [data, setData] = useState([]);
-    const [fileList, setFileList] = useState([]);
+    const [imgList, setImgList] = useState([]);
+    const [docList, setDocList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenObs, setIsModalOpenObs] = useState(false);
+    const [isModalOpenDoc, setIsModalOpenDoc] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
-    const [registro, setRegistro] = useState({})
+    const [registro, setRegistro] = useState({});
     const [obs, setObs] = useState('');
   
     useEffect(() => { 
@@ -31,7 +34,7 @@ const IndiciosFilter = () => {
        .then(response => 
         {return response.json()}
       )
-      .then(result =>{ actualizaDatos(result.body)})  },[data])
+      .then(result =>{ actualizaDatos(result.body)})  },[isModalOpenObs])
 
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -152,9 +155,23 @@ const IndiciosFilter = () => {
       body: JSON.stringify() 
      })
      .then(response => {return response.json()})
-     .then(result =>{ setFileList(result.body)})
-    setIsModalOpenObs(true);
+     .then(result =>{ setImgList(result.body)})
+    setIsModalOpen(true);
   };
+
+  const showModalDoc = (key) => {
+
+    keyActual = key;
+    fetch('http://localhost:4000/api/Documentos/'+key, {
+      method: 'GET', 
+      headers:{'Content-Type': 'application/json' }, 
+      body: JSON.stringify() 
+     })
+     .then(response => {return response.json()})
+     .then(result =>{ setDocList(result.body)})
+    setIsModalOpenDoc(true);
+  };
+
 
   const showModalObs = (key, observaciones, registro) => {
 
@@ -219,6 +236,7 @@ const IndiciosFilter = () => {
           { text: "UEIORPIFAM", value: "UEIORPIFAM" },
           { text: "UEITMPO", value: "UEITMPO" },
           { text: "UEIARV", value: "UEIARV" },
+          { text: "UEIDCS", value: "UEIDCS" },
         ],
         filterMode: "tree",
         filterSearch: true,
@@ -262,7 +280,26 @@ const IndiciosFilter = () => {
               Imagenes
             </Button>
 
-            <Modalj keyActualP = {keyActual} isModalOpen ={isModalOpen} setIsModalOpen= {setIsModalOpen} fileList= {fileList} setFileList = {setFileList} />
+            <Modalj keyActualP = {keyActual} isModalOpen ={isModalOpen} setIsModalOpen= {setIsModalOpen} fileList= {imgList} setFileList = {setImgList} />
+
+          </>
+        ),
+      },
+      {
+        title: "Documentos",
+        dataIndex: "documentos",
+        render: (_, record) => (
+          <>
+            <Button
+              type="primary"
+              onClick={() => {
+                showModalDoc(record.id);
+              }}
+            >
+              Documentos
+            </Button>
+
+            <ModalDoc keyActualP = {keyActual} isModalOpenDoc ={isModalOpenDoc} setIsModalOpenDoc= {setIsModalOpenDoc} docList= {docList} setDocList = {setDocList} />
 
           </>
         ),
